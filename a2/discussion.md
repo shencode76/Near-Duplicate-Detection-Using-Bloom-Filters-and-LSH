@@ -347,3 +347,14 @@ Explanation: This book discusses the impact of shingle sizes on document similar
 Source: Leskovec, J., Rajaraman, A., & Ullman, J. D. (2020). Mining of Massive Datasets (3rd ed.). Cambridge University Press.
 
 Explanation: Multi-probe LSH is recommended to improve recall by allowing the algorithm to check adjacent hash buckets for near-duplicate candidates. This approach increases recall without requiring additional hash tables, a method found effective in candidate generation for large-scale datasets.
+
+
+## Dockerization:
+### Why Use Redis for LSH Search?
+Redis is an excellent choice for implementing Locality Sensitive Hashing (LSH) search due to its high performance, flexible data structures, and real-time capabilities. LSH requires efficient storage and retrieval of hash buckets to quickly identify similar items. Redis's Hash and Set data structures are ideal for organizing and storing hash buckets, while its in-memory architecture ensures extremely low-latency queries. Redis's distributed and clustering features make it highly scalable, capable of handling large-scale datasets effectively. These strengths make Redis a powerful tool for building efficient and scalable LSH systems.
+
+### Why Use a Redis Container Image on Docker?
+Using a Redis container image on Docker simplifies deployment, enhances portability, and ensures consistency across different environments. The containerized Redis comes pre-configured with all its dependencies, eliminating manual setup and reducing potential configuration errors. It is portable, meaning the same Redis instance can run seamlessly on development, staging, and production systems. Containers provide resource isolation, allowing precise allocation of CPU and memory for Redis, ensuring optimized performance.
+
+### Why use Flask?
+Using Flask as a frontend simplifies development with its lightweight framework, making it ideal for small web applications as our assignment. Its flexibility allows seamless integration with Redis or other backends. It provide simlicity and flexibility to incorporate interactive features. 

@@ -1,0 +1,36 @@
+# version: '3.8'
+
+services:
+  lsh-redis-data:
+    image: redis:alpine
+    container_name: redis-container
+    ports:
+      - "6379:6379"
+    networks:
+      - app-network
+    restart: always  # Add restart policy for Redis
+    volumes:
+      - ./logs/redis:/data/logs  # Store Redis logs
+
+  backend:
+    build:
+      context: .
+      dockerfile: ./src/a3/Dockerfile
+    container_name: backend-container
+    depends_on:
+      - lsh-redis-data
+    networks:
+      - app-network
+    environment:
+      - PYTHONPATH=/app/src
+    ports:
+      - "5001:5001"
+    volumes:
+      - ./src:/app/src
+      - ./logs/backend:/app/logs  # Store backend logs
+    restart: always  # Add restart policy for Backend
+
+networks:
+  app-network:
+    driver: bridge
+

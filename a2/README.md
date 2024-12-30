@@ -390,6 +390,57 @@ python -m src.a2.cli case2 data/five.tsv data/result/sample_result_case2.txt --q
 - Output Format: Each line represents a cluster of near-duplicate document IDs.
 - Exact Duplicates: At the end of the output file, any exact duplicates are listed line by line.
 
+##### LSH Nearest Neighbor Search on Docker
+###### Features
+- Input: name of a TSV file containing textual data in the backend `data` folder.
+- Store data in Redis for fast retrieval.
+- Prepare data for LSH nearest neighbor search.
+
+###### Prerequisites
+- Docker
+- Python 3.8+
+- Redis
+- Flask
+
+###### Setup and Run 
+###### Clone the Repository:
+```bash
+git clone https://github.com/DSAN6700-24Fall/assignment-3-chick-fil-a.git
+cd <root-of-this-project > # should be assigment-3-chick-fil-a/a3
+```
+###### Run the shell script to 
+1. Build Docker image: my-redis-app
+2. Build environment: chickfila-lsh
+3. Start Redis Container: lsh-redis-data 
+4. Start Python Container
+5. Run Flask Application
+
+```bash
+sh ./src/a3/save_lsh_data_docker.sh
+```
+
+###### Visit the local host to select file and run LSH Nearest Neighbor Search at:
+
+http://127.0.0.1:5001
+
+Below are screenshots demonstrating how to use the LSH search functionality and interact with data files stored in the backend.
+![search_page](./tests/search_page.png)
+![success_search](./tests/success_result.png)
+
+In reality, there will be three situations when running an LSH similarly search:
+1. Successfully input a file name that has already been stored in the backend database, and LSH can find a similar sentence based on the query sentence(*presenting the similar sentence in blue found in the given file*)
+2. LSH cannot find a similar sentence based on query and given input file name(*showing blue "None"*)
+3. The input file did not exist in backend database(*showing "File not found. Please make sure the file exists in the data directory." in red*)
+
+###### Clean up cached containers & network(optional)
+```bash
+docker stop lsh-redis-data my-redis-app
+docker rm lsh-redis-data my-redis-app
+docker network rm chickfila-lsh
+```
+
+
+
 ## Contributing
 
 Interested in contributing? Check out the contributing guidelines. 
