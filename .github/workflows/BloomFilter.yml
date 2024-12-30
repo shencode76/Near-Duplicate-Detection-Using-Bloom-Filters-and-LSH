@@ -1,0 +1,45 @@
+# This is a basic workflow to help you get started with Actions
+
+name: BloomFilter-workflow
+
+# Controls when the workflow will run
+# on: [push, pull_request]
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:  # Allow manual triggering of the workflow
+
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+        
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Check-out repository
+        uses: actions/checkout@v2
+
+      - name: Install poetry
+        uses: snok/install-poetry@v1
+        
+      - name: Install package
+        run: poetry install
+        working-directory: ./a2
+        
+      - name: Run pytest
+        run: poetry run pytest tests/test_bloomfilter.py
+        working-directory: ./a2
+  
+      - name: Build documentation
+        run: poetry run make html --directory docs/
+        working-directory: ./a2
+        

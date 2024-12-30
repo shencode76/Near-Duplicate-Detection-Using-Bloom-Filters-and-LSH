@@ -1,0 +1,41 @@
+name: Baseline-Workflow
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9
+        
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Check-out repository
+        uses: actions/checkout@v2
+
+      - name: Install poetry
+        uses: snok/install-poetry@v1
+        
+      - name: Install package
+        run: poetry install
+        working-directory: ./a2
+        
+      - name: Run pytest
+        run: poetry run pytest tests/test_baseline.py
+        working-directory: ./a2
+  
+  
+      - name: Build documentation
+        run: poetry run make html --directory docs/
+        working-directory: ./a2

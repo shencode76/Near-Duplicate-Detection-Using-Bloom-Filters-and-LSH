@@ -1,0 +1,38 @@
+name: LSH-workflow
+
+# on: [push, pull_request]
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:  # Allow manual triggering of the workflow
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.9
+
+    - name: Check-out repository
+      uses: actions/checkout@v2
+
+    - name: Install poetry
+      uses: snok/install-poetry@v1
+
+    - name: Install package
+      run: poetry install
+      working-directory: ./a2
+    
+    - name: Run pytest
+      run: poetry run pytest tests/test_lsh.py
+      working-directory: ./a2
+
+    - name: Build documentation
+      run: poetry run make html --directory docs/
+      working-directory: ./a2
+
