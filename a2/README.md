@@ -8,7 +8,7 @@ To implement, you'll need Python 3.9 or later. You can install the necessary dep
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/DSAN6700-24Fall/assignment-2-chick-fil-a.git
+git clone https://github.com/shencode76/Near-Duplicate-Detection-Using-Bloom-Filters-and-LSH.git
 pip install a2
 ```
 ## Work Directory Tree
@@ -16,100 +16,397 @@ pip install a2
 ```markdown
 .
 ├── README.md
-└── a2
-    ├── CHANGELOG.md
-    ├── LICENSE
-    ├── README.md
-    ├── data
-    │   ├── five.tsv
-    │   ├── hundred.tsv
-    │   ├── hundredk.tsv
-    │   ├── onek.tsv
-    │   ├── result
-    │   │   ├── 3_bloom_filters_comparision.png
-    │   │   ├── bloomfilter_falsepositiverate.png
-    │   │   ├── case2_onek.txt
-    │   │   ├── case2_threehundred.txt
-    │   │   ├── empirical_s_curve.png
-    │   │   ├── exact.png
-    │   │   ├── f1_score_vs_bands.png
-    │   │   └── f1_score_vs_rows.png
-    │   ├── tenk.tsv
-    │   ├── thirty.tsv
-    │   ├── thirtyk.tsv
-    │   ├── threehundred.tsv
-    │   └── threek.tsv
-    ├── discussion.md
-    ├── docs
-    │   ├── Makefile
-    │   ├── changelog.md
-    │   ├── conf.py
-    │   ├── example.ipynb
-    │   ├── index.md
-    │   ├── make.bat
-    │   └── requirements.txt
-    ├── expected
-    │   ├── five-md5.txt
-    │   ├── five-shingle.txt
-    │   ├── five-wordfreq.txt
-    │   ├── thirty-md5.txt
-    │   ├── thirty-shingle.txt
-    │   └── thirty-wordfreq.txt
-    ├── poetry.lock
-    ├── pyproject.toml
-    ├── results
-    │   ├── hundredk-Shingle.txt
-    │   ├── hundredk-WordFreq.txt
-    │   ├── hundredk-lsh-imp.txt
-    │   ├── hundredk-lsh.txt
-    │   ├── hundredk-md5.txt
-    │   ├── onek-Shingle.txt
-    │   ├── onek-WordFreq.txt
-    │   ├── onek-lsh-imp.txt
-    │   ├── onek-lsh.txt
-    │   ├── onek-md5.txt
-    │   ├── tenk-Shingle.txt
-    │   ├── tenk-WordFreq.txt
-    │   ├── tenk-lsh-imp.txt
-    │   ├── tenk-lsh.txt
-    │   ├── tenk-md5.txt
-    │   ├── threehundred-Shingle.txt
-    │   ├── threehundred-WordFreq.txt
-    │   ├── threehundred-lsh-imp.txt
-    │   ├── threehundred-lsh.txt
-    │   └── threehundred-md5.txt
-    ├── src
-    │   └── a2
-    │       ├── __init__.py
-    │       ├── a2.py
-    │       ├── baseline.py
-    │       ├── bloomfilter1.py
-    │       ├── bloomfilter1_cli.py
-    │       ├── bloomfilter3.py
-    │       ├── bloomfilter3_cli.py
-    │       ├── cli.py
-    │       ├── dedup.py
-    │       ├── eda-baseline.py
-    │       ├── lsh_case1.py
-    │       ├── lsh_case1_imp.py
-    │       ├── lsh_case2.py
-    │       └── utils.py
-    ├── test_output
-    │   ├── five-md5.txt
-    │   ├── five-shingle.txt
-    │   ├── five-wordfreq.txt
-    │   ├── thirty-md5.txt
-    │   ├── thirty-shingle.txt
-    │   └── thirty-wordfreq.txt
-    └── tests
-        ├── five.tsv
-        ├── hundred.tsv
-        ├── short_sent.tsv
-        ├── test_a2.py
-        ├── test_baseline.py
-        ├── test_bloomfilter.py
-        └── test_lsh.py
- 
+├── a2
+│   ├── CHANGELOG.md
+│   ├── LICENSE
+│   ├── README.md
+│   ├── data
+│   │   ├── five.tsv
+│   │   ├── hundred.tsv
+│   │   ├── onek.tsv
+│   │   ├── result
+│   │   │   ├── 3_bloom_filters_comparision.png
+│   │   │   ├── bloomfilter_falsepositiverate.png
+│   │   │   ├── case2_onek.txt
+│   │   │   ├── case2_threehundred.txt
+│   │   │   ├── empirical_s_curve.png
+│   │   │   ├── exact.png
+│   │   │   ├── f1_score_vs_bands.png
+│   │   │   └── f1_score_vs_rows.png
+│   │   ├── tenk.tsv
+│   │   ├── thirty.tsv
+│   │   ├── threehundred.tsv
+│   │   └── threek.tsv
+│   ├── discussion.md
+│   ├── docs
+│   │   ├── Makefile
+│   │   ├── _build
+│   │   │   ├── doctrees
+│   │   │   │   ├── autoapi
+│   │   │   │   │   ├── a2
+│   │   │   │   │   │   ├── a2
+│   │   │   │   │   │   │   └── index.doctree
+│   │   │   │   │   │   ├── baseline
+│   │   │   │   │   │   │   └── index.doctree
+│   │   │   │   │   │   ├── bloomfilter1
+│   │   │   │   │   │   │   └── index.doctree
+│   │   │   │   │   │   ├── bloomfilter1_cli
+│   │   │   │   │   │   │   └── index.doctree
+│   │   │   │   │   │   ├── bloomfilter2
+│   │   │   │   │   │   │   └── index.doctree
+│   │   │   │   │   │   ├── bloomfilter3
+│   │   │   │   │   │   │   └── index.doctree
+│   │   │   │   │   │   ├── bloomfilter3_cli
+│   │   │   │   │   │   │   └── index.doctree
+│   │   │   │   │   │   ├── cli
+│   │   │   │   │   │   │   └── index.doctree
+│   │   │   │   │   │   ├── dedup
+│   │   │   │   │   │   │   └── index.doctree
+│   │   │   │   │   │   ├── eda-baseline
+│   │   │   │   │   │   │   └── index.doctree
+│   │   │   │   │   │   ├── index.doctree
+│   │   │   │   │   │   ├── lsh
+│   │   │   │   │   │   │   └── index.doctree
+│   │   │   │   │   │   ├── lsh_case1
+│   │   │   │   │   │   │   └── index.doctree
+│   │   │   │   │   │   ├── lsh_case1_imp
+│   │   │   │   │   │   │   └── index.doctree
+│   │   │   │   │   │   ├── lsh_case2
+│   │   │   │   │   │   │   └── index.doctree
+│   │   │   │   │   │   └── utils
+│   │   │   │   │   │       └── index.doctree
+│   │   │   │   │   ├── a3
+│   │   │   │   │   │   ├── dedup
+│   │   │   │   │   │   │   └── index.doctree
+│   │   │   │   │   │   ├── index.doctree
+│   │   │   │   │   │   ├── lsh
+│   │   │   │   │   │   │   └── index.doctree
+│   │   │   │   │   │   ├── redis_data
+│   │   │   │   │   │   │   └── index.doctree
+│   │   │   │   │   │   └── utils
+│   │   │   │   │   │       └── index.doctree
+│   │   │   │   │   └── index.doctree
+│   │   │   │   ├── changelog.doctree
+│   │   │   │   ├── environment.pickle
+│   │   │   │   ├── example.doctree
+│   │   │   │   └── index.doctree
+│   │   │   ├── html
+│   │   │   │   ├── _modules
+│   │   │   │   │   ├── a2
+│   │   │   │   │   │   ├── baseline.html
+│   │   │   │   │   │   ├── bloomfilter1.html
+│   │   │   │   │   │   ├── bloomfilter1_cli.html
+│   │   │   │   │   │   ├── bloomfilter3.html
+│   │   │   │   │   │   ├── bloomfilter3_cli.html
+│   │   │   │   │   │   ├── cli.html
+│   │   │   │   │   │   ├── dedup.html
+│   │   │   │   │   │   ├── eda-baseline.html
+│   │   │   │   │   │   ├── lsh_case1.html
+│   │   │   │   │   │   ├── lsh_case1_imp.html
+│   │   │   │   │   │   └── lsh_case2.html
+│   │   │   │   │   ├── a3
+│   │   │   │   │   │   ├── dedup.html
+│   │   │   │   │   │   └── lsh.html
+│   │   │   │   │   └── index.html
+│   │   │   │   ├── _sources
+│   │   │   │   │   ├── autoapi
+│   │   │   │   │   │   ├── a2
+│   │   │   │   │   │   │   ├── a2
+│   │   │   │   │   │   │   │   └── index.rst.txt
+│   │   │   │   │   │   │   ├── baseline
+│   │   │   │   │   │   │   │   └── index.rst.txt
+│   │   │   │   │   │   │   ├── bloomfilter1
+│   │   │   │   │   │   │   │   └── index.rst.txt
+│   │   │   │   │   │   │   ├── bloomfilter1_cli
+│   │   │   │   │   │   │   │   └── index.rst.txt
+│   │   │   │   │   │   │   ├── bloomfilter2
+│   │   │   │   │   │   │   │   └── index.rst.txt
+│   │   │   │   │   │   │   ├── bloomfilter3
+│   │   │   │   │   │   │   │   └── index.rst.txt
+│   │   │   │   │   │   │   ├── bloomfilter3_cli
+│   │   │   │   │   │   │   │   └── index.rst.txt
+│   │   │   │   │   │   │   ├── cli
+│   │   │   │   │   │   │   │   └── index.rst.txt
+│   │   │   │   │   │   │   ├── dedup
+│   │   │   │   │   │   │   │   └── index.rst.txt
+│   │   │   │   │   │   │   ├── eda-baseline
+│   │   │   │   │   │   │   │   └── index.rst.txt
+│   │   │   │   │   │   │   ├── index.rst.txt
+│   │   │   │   │   │   │   ├── lsh
+│   │   │   │   │   │   │   │   └── index.rst.txt
+│   │   │   │   │   │   │   ├── lsh_case1
+│   │   │   │   │   │   │   │   └── index.rst.txt
+│   │   │   │   │   │   │   ├── lsh_case1_imp
+│   │   │   │   │   │   │   │   └── index.rst.txt
+│   │   │   │   │   │   │   ├── lsh_case2
+│   │   │   │   │   │   │   │   └── index.rst.txt
+│   │   │   │   │   │   │   └── utils
+│   │   │   │   │   │   │       └── index.rst.txt
+│   │   │   │   │   │   ├── a3
+│   │   │   │   │   │   │   ├── dedup
+│   │   │   │   │   │   │   │   └── index.rst.txt
+│   │   │   │   │   │   │   ├── index.rst.txt
+│   │   │   │   │   │   │   ├── lsh
+│   │   │   │   │   │   │   │   └── index.rst.txt
+│   │   │   │   │   │   │   ├── redis_data
+│   │   │   │   │   │   │   │   └── index.rst.txt
+│   │   │   │   │   │   │   └── utils
+│   │   │   │   │   │   │       └── index.rst.txt
+│   │   │   │   │   │   └── index.rst.txt
+│   │   │   │   │   ├── changelog.md.txt
+│   │   │   │   │   ├── example.ipynb.txt
+│   │   │   │   │   └── index.md.txt
+│   │   │   │   ├── _static
+│   │   │   │   │   ├── _sphinx_javascript_frameworks_compat.js
+│   │   │   │   │   ├── basic.css
+│   │   │   │   │   ├── css
+│   │   │   │   │   │   ├── badge_only.css
+│   │   │   │   │   │   ├── fonts
+│   │   │   │   │   │   │   ├── Roboto-Slab-Bold.woff
+│   │   │   │   │   │   │   ├── Roboto-Slab-Bold.woff2
+│   │   │   │   │   │   │   ├── Roboto-Slab-Regular.woff
+│   │   │   │   │   │   │   ├── Roboto-Slab-Regular.woff2
+│   │   │   │   │   │   │   ├── fontawesome-webfont.eot
+│   │   │   │   │   │   │   ├── fontawesome-webfont.svg
+│   │   │   │   │   │   │   ├── fontawesome-webfont.ttf
+│   │   │   │   │   │   │   ├── fontawesome-webfont.woff
+│   │   │   │   │   │   │   ├── fontawesome-webfont.woff2
+│   │   │   │   │   │   │   ├── lato-bold-italic.woff
+│   │   │   │   │   │   │   ├── lato-bold-italic.woff2
+│   │   │   │   │   │   │   ├── lato-bold.woff
+│   │   │   │   │   │   │   ├── lato-bold.woff2
+│   │   │   │   │   │   │   ├── lato-normal-italic.woff
+│   │   │   │   │   │   │   ├── lato-normal-italic.woff2
+│   │   │   │   │   │   │   ├── lato-normal.woff
+│   │   │   │   │   │   │   └── lato-normal.woff2
+│   │   │   │   │   │   └── theme.css
+│   │   │   │   │   ├── doctools.js
+│   │   │   │   │   ├── documentation_options.js
+│   │   │   │   │   ├── file.png
+│   │   │   │   │   ├── fonts
+│   │   │   │   │   │   ├── Lato
+│   │   │   │   │   │   │   ├── lato-bold.eot
+│   │   │   │   │   │   │   ├── lato-bold.ttf
+│   │   │   │   │   │   │   ├── lato-bold.woff
+│   │   │   │   │   │   │   ├── lato-bold.woff2
+│   │   │   │   │   │   │   ├── lato-bolditalic.eot
+│   │   │   │   │   │   │   ├── lato-bolditalic.ttf
+│   │   │   │   │   │   │   ├── lato-bolditalic.woff
+│   │   │   │   │   │   │   ├── lato-bolditalic.woff2
+│   │   │   │   │   │   │   ├── lato-italic.eot
+│   │   │   │   │   │   │   ├── lato-italic.ttf
+│   │   │   │   │   │   │   ├── lato-italic.woff
+│   │   │   │   │   │   │   ├── lato-italic.woff2
+│   │   │   │   │   │   │   ├── lato-regular.eot
+│   │   │   │   │   │   │   ├── lato-regular.ttf
+│   │   │   │   │   │   │   ├── lato-regular.woff
+│   │   │   │   │   │   │   └── lato-regular.woff2
+│   │   │   │   │   │   └── RobotoSlab
+│   │   │   │   │   │       ├── roboto-slab-v7-bold.eot
+│   │   │   │   │   │       ├── roboto-slab-v7-bold.ttf
+│   │   │   │   │   │       ├── roboto-slab-v7-bold.woff
+│   │   │   │   │   │       ├── roboto-slab-v7-bold.woff2
+│   │   │   │   │   │       ├── roboto-slab-v7-regular.eot
+│   │   │   │   │   │       ├── roboto-slab-v7-regular.ttf
+│   │   │   │   │   │       ├── roboto-slab-v7-regular.woff
+│   │   │   │   │   │       └── roboto-slab-v7-regular.woff2
+│   │   │   │   │   ├── graphviz.css
+│   │   │   │   │   ├── jquery.js
+│   │   │   │   │   ├── js
+│   │   │   │   │   │   ├── badge_only.js
+│   │   │   │   │   │   ├── theme.js
+│   │   │   │   │   │   └── versions.js
+│   │   │   │   │   ├── language_data.js
+│   │   │   │   │   ├── minus.png
+│   │   │   │   │   ├── mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css
+│   │   │   │   │   ├── plus.png
+│   │   │   │   │   ├── pygments.css
+│   │   │   │   │   ├── searchtools.js
+│   │   │   │   │   └── sphinx_highlight.js
+│   │   │   │   ├── autoapi
+│   │   │   │   │   ├── a2
+│   │   │   │   │   │   ├── a2
+│   │   │   │   │   │   │   └── index.html
+│   │   │   │   │   │   ├── baseline
+│   │   │   │   │   │   │   └── index.html
+│   │   │   │   │   │   ├── bloomfilter1
+│   │   │   │   │   │   │   └── index.html
+│   │   │   │   │   │   ├── bloomfilter1_cli
+│   │   │   │   │   │   │   └── index.html
+│   │   │   │   │   │   ├── bloomfilter2
+│   │   │   │   │   │   │   └── index.html
+│   │   │   │   │   │   ├── bloomfilter3
+│   │   │   │   │   │   │   └── index.html
+│   │   │   │   │   │   ├── bloomfilter3_cli
+│   │   │   │   │   │   │   └── index.html
+│   │   │   │   │   │   ├── cli
+│   │   │   │   │   │   │   └── index.html
+│   │   │   │   │   │   ├── dedup
+│   │   │   │   │   │   │   └── index.html
+│   │   │   │   │   │   ├── eda-baseline
+│   │   │   │   │   │   │   └── index.html
+│   │   │   │   │   │   ├── index.html
+│   │   │   │   │   │   ├── lsh
+│   │   │   │   │   │   │   └── index.html
+│   │   │   │   │   │   ├── lsh_case1
+│   │   │   │   │   │   │   └── index.html
+│   │   │   │   │   │   ├── lsh_case1_imp
+│   │   │   │   │   │   │   └── index.html
+│   │   │   │   │   │   ├── lsh_case2
+│   │   │   │   │   │   │   └── index.html
+│   │   │   │   │   │   └── utils
+│   │   │   │   │   │       └── index.html
+│   │   │   │   │   ├── a3
+│   │   │   │   │   │   ├── dedup
+│   │   │   │   │   │   │   └── index.html
+│   │   │   │   │   │   ├── index.html
+│   │   │   │   │   │   ├── lsh
+│   │   │   │   │   │   │   └── index.html
+│   │   │   │   │   │   ├── redis_data
+│   │   │   │   │   │   │   └── index.html
+│   │   │   │   │   │   └── utils
+│   │   │   │   │   │       └── index.html
+│   │   │   │   │   └── index.html
+│   │   │   │   ├── changelog.html
+│   │   │   │   ├── example.html
+│   │   │   │   ├── genindex.html
+│   │   │   │   ├── index.html
+│   │   │   │   ├── objects.inv
+│   │   │   │   ├── py-modindex.html
+│   │   │   │   ├── reports
+│   │   │   │   │   └── example.err.log
+│   │   │   │   ├── search.html
+│   │   │   │   └── searchindex.js
+│   │   │   └── jupyter_execute
+│   │   │       └── example.ipynb
+│   │   ├── changelog.md
+│   │   ├── conf.py
+│   │   ├── example.ipynb
+│   │   ├── index.md
+│   │   ├── make.bat
+│   │   └── requirements.txt
+│   ├── duplicates.zip
+│   ├── expected
+│   │   ├── five-md5.txt
+│   │   ├── five-shingle.txt
+│   │   ├── five-wordfreq.txt
+│   │   ├── thirty-md5.txt
+│   │   ├── thirty-shingle.txt
+│   │   └── thirty-wordfreq.txt
+│   ├── poetry.lock
+│   ├── pyproject.toml
+│   ├── results
+│   │   ├── hundredk-Shingle.txt
+│   │   ├── hundredk-WordFreq.txt
+│   │   ├── hundredk-lsh-imp.txt
+│   │   ├── hundredk-lsh.txt
+│   │   ├── hundredk-md5.txt
+│   │   ├── onek-Shingle.txt
+│   │   ├── onek-WordFreq.txt
+│   │   ├── onek-lsh-imp.txt
+│   │   ├── onek-lsh.txt
+│   │   ├── onek-md5.txt
+│   │   ├── tenk-Shingle.txt
+│   │   ├── tenk-WordFreq.txt
+│   │   ├── tenk-lsh-imp.txt
+│   │   ├── tenk-lsh.txt
+│   │   ├── tenk-md5.txt
+│   │   ├── threehundred-Shingle.txt
+│   │   ├── threehundred-WordFreq.txt
+│   │   ├── threehundred-lsh-imp.txt
+│   │   ├── threehundred-lsh.txt
+│   │   └── threehundred-md5.txt
+│   ├── src
+│   │   ├── a2
+│   │   │   ├── __init__.py
+│   │   │   ├── __pycache__
+│   │   │   │   ├── __init__.cpython-312.pyc
+│   │   │   │   ├── __init__.cpython-39.pyc
+│   │   │   │   ├── a2.cpython-39.pyc
+│   │   │   │   ├── baseline.cpython-39.pyc
+│   │   │   │   ├── bloomfilter1.cpython-312.pyc
+│   │   │   │   ├── bloomfilter1.cpython-39.pyc
+│   │   │   │   ├── bloomfilter1_cli.cpython-39.pyc
+│   │   │   │   ├── bloomfilter3.cpython-39.pyc
+│   │   │   │   ├── bloomfilter3_cli.cpython-39.pyc
+│   │   │   │   ├── cli.cpython-39.pyc
+│   │   │   │   ├── dedup.cpython-39.pyc
+│   │   │   │   ├── eda-baseline.cpython-39.pyc
+│   │   │   │   ├── lsh_case1.cpython-39.pyc
+│   │   │   │   ├── lsh_case1_imp.cpython-39.pyc
+│   │   │   │   ├── lsh_case2.cpython-39.pyc
+│   │   │   │   └── utils.cpython-39.pyc
+│   │   │   ├── a2.py
+│   │   │   ├── baseline.py
+│   │   │   ├── bloomfilter1.py
+│   │   │   ├── bloomfilter1_cli.py
+│   │   │   ├── bloomfilter3.py
+│   │   │   ├── bloomfilter3_cli.py
+│   │   │   ├── cli.py
+│   │   │   ├── dedup.py
+│   │   │   ├── eda-baseline.py
+│   │   │   ├── lsh_case1.py
+│   │   │   ├── lsh_case1_imp.py
+│   │   │   ├── lsh_case2.py
+│   │   │   └── utils.py
+│   │   └── a3
+│   │       ├── Dockerfile
+│   │       ├── __init__.py
+│   │       ├── __pycache__
+│   │       │   ├── __init__.cpython-38.pyc
+│   │       │   ├── __init__.cpython-39.pyc
+│   │       │   ├── dedup.cpython-38.pyc
+│   │       │   ├── dedup.cpython-39.pyc
+│   │       │   ├── lsh.cpython-38.pyc
+│   │       │   ├── lsh.cpython-39.pyc
+│   │       │   └── redis_data.cpython-39.pyc
+│   │       ├── data
+│   │       │   ├── five.tsv
+│   │       │   ├── hundred.tsv
+│   │       │   ├── onek.tsv
+│   │       │   ├── tenk.tsv
+│   │       │   ├── thirty.tsv
+│   │       │   ├── threehundred.tsv
+│   │       │   └── threek.tsv
+│   │       ├── dedup.py
+│   │       ├── lsh.py
+│   │       ├── redis_data.py
+│   │       ├── save_lsh_data_docker.sh
+│   │       └── utils.py
+│   ├── test_output
+│   │   ├── five-md5.txt
+│   │   ├── five-shingle.txt
+│   │   ├── five-wordfreq.txt
+│   │   ├── thirty-md5.txt
+│   │   ├── thirty-shingle.txt
+│   │   └── thirty-wordfreq.txt
+│   └── tests
+│       ├── __pycache__
+│       │   ├── test_a2.cpython-312-pytest-8.3.3.pyc
+│       │   ├── test_a2.cpython-39-pytest-8.3.3.pyc
+│       │   ├── test_a2.cpython-39-pytest-8.3.4.pyc
+│       │   ├── test_baseline.cpython-39-pytest-8.3.3.pyc
+│       │   ├── test_baseline.cpython-39-pytest-8.3.4.pyc
+│       │   ├── test_bloomfilter.cpython-311-pytest-7.4.0.pyc
+│       │   ├── test_bloomfilter.cpython-312-pytest-8.3.3.pyc
+│       │   ├── test_bloomfilter.cpython-39-pytest-8.3.3.pyc
+│       │   ├── test_bloomfilter.cpython-39-pytest-8.3.4.pyc
+│       │   ├── test_lsh.cpython-312-pytest-8.3.3.pyc
+│       │   ├── test_lsh.cpython-39-pytest-8.3.3.pyc
+│       │   └── test_lsh.cpython-39-pytest-8.3.4.pyc
+│       ├── five.tsv
+│       ├── hundred.tsv
+│       ├── search_page.png
+│       ├── short_sent.tsv
+│       ├── success_result.png
+│       ├── test_a2.py
+│       ├── test_baseline.py
+│       ├── test_bloomfilter.py
+│       └── test_lsh.py
+└── docker-compose.yml
+
+98 directories, 292 files
+
  ```
 
  
@@ -237,7 +534,7 @@ This will generate test output in the test_output folder for you to check manual
 
 #### Usage
 ##### Basic Bloom Filter
-Firstly, please make sure you are within a2 directory as in "assignment-2-chick-fil-a/a2"
+Firstly, please make sure you are within a2 directory 
 
 ```python
 # Importing the BloomFilter class from the a2.bloomfilter1 module.
@@ -256,7 +553,7 @@ command template: `python -m src.a2.bloomfilter1_cli --init --n <number_of_eleme
 
 ```bash
 # usage example:
-cd a2 #(if you are in the root position(ASSIGNMENT-2-CHICK-FIL-A))
+cd a2  
 
 python -m src.a2.bloomfilter1_cli --init --n 10000000 --f 0.02 --insert-file ./data/thirty.tsv --query-file ./data/five.tsv
 ```
@@ -405,8 +702,8 @@ python -m src.a2.cli case2 data/five.tsv data/result/sample_result_case2.txt --q
 ###### Setup and Run 
 ###### Clone the Repository:
 ```bash
-git clone https://github.com/DSAN6700-24Fall/assignment-3-chick-fil-a.git
-cd <root-of-this-project > # should be assigment-3-chick-fil-a/a3
+git clone https://github.com/shencode76/Near-Duplicate-Detection-Using-Bloom-Filters-and-LSH.git
+cd <root-of-this-project > 
 ```
 ###### Run the shell script to 
 1. Build Docker image: my-redis-app

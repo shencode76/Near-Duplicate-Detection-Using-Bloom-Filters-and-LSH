@@ -17,15 +17,12 @@ The final submission includes results for different document sizes (300, 1000, 1
 
 ## Bloom Filter Summary 
 
-Please see [a2/README.md]([README](https://github.com/DSAN6700-24Fall/assignment-2-chick-fil-a/blob/main/a2/README.md)) for more information about the installation procedures of this problem. 
-
 ### Introduction :
-In this project, we developed two python scripts for bloom filters, including BloomFilter, StandardBloomFilter, ChunkedBloomFilter, ImprovedBloomFilter. To distinguish the bloom filters to answer exercise 1,2, and 3 in the [page 59 of Algorithms and Data Structures for Massive Datasets](https://ebookcentral-proquest-com.proxy.library.georgetown.edu/lib/georgetown/reader.action?docID=7049417&ppg=64), we seperate the bloom filter classes in two scipts([bloomfilter1.py](https://github.com/DSAN6700-24Fall/assignment-2-chick-fil-a/blob/main/a2/src/a2/bloomfilter1.py) and [bloomfilter3.py](https://github.com/DSAN6700-24Fall/assignment-2-chick-fil-a/blob/main/a2/src/a2/bloomfilter3.py)).
+In this project, we developed two python scripts for bloom filters, including BloomFilter, StandardBloomFilter, ChunkedBloomFilter, ImprovedBloomFilter. To distinguish the bloom filters to answer exercise 1,2, and 3 in the [page 59 of Algorithms and Data Structures for Massive Datasets](https://ebookcentral-proquest-com.proxy.library.georgetown.edu/lib/georgetown/reader.action?docID=7049417&ppg=64), we seperate the bloom filter classes in two scipts bloomfilter1.py and bloomfilter3.py .
 
 
 ## Baseline Summary 
 
-Please see [a2/README.md]([README](https://github.com/DSAN6700-24Fall/assignment-2-chick-fil-a/blob/main/a2/README.md)) for more information about the installation procedures of this problem. 
 
 ## LSH Summary 
 
@@ -48,6 +45,16 @@ This case enables a query-based search for finding documents within a dataset th
 
 This project provides a CLI (cli.py) to run both cases and the improved LSH variant, making it adaptable for different document deduplication and search needs.
 
-Please see [a2/README.md]([README](https://github.com/DSAN6700-24Fall/assignment-2-chick-fil-a/blob/main/a2/README.md)) for more information about the installation procedures of this problem. 
+Please see a2/README.md for more information about the installation procedures of this problem. 
 
 The package is structured using poetry, and we set up the command-line interface (CLI) to enable users to run our code. We documented our code with informative README and function docstrings, and established a CI/CD workflow on GitHub Actions to automate the installation and documentation processes. For more information regarding document processing (how did you tokenize the text or did you run any text normalization beforehand), algorithmic choices (what shingle size did you use or how did you calculate the size of the Bloom filter), please visit the discussion.md.
+
+## **Results**
+- Tested on datasets ranging from 300 to 100,000 documents.
+- Improved recall with **Multi-Probe LSH**.
+- Reduced false positives in **Bloom Filters**.
+
+## **References**
+- [Algorithms and Data Structures for Massive Datasets](https://ebookcentral-proquest-com.proxy.library.georgetown.edu/lib/georgetown/reader.action?docID=7049417&ppg=64)
+- [GitHub Repository](https://github.com/shencode76/Near-Duplicate-Detection-Using-Bloom-Filters-and-LSH)
+
